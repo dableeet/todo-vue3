@@ -33,11 +33,17 @@ const dispatchCreateTask = () => {
         name="taskform"
         class="taskform todo__taskform"
       >
-        <input type="text" v-model="newTaskModel" />
+        <input
+          type="text"
+          v-model="newTaskModel"
+          class="taskform__input"
+          placeholder="write your new task"
+        />
         <input
           @click="dispatchCreateTask()"
           type="button"
-          value="create task"
+          value="create"
+          class="button taskform__create-btn"
         />
       </form>
       <ul class="list todo__list">
@@ -55,4 +61,42 @@ const dispatchCreateTask = () => {
   </main>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.todo {
+  &__container {
+    position: absolute;
+    width: 724px;
+    min-height: 320px;
+    top: 10%;
+    left: 50%;
+    transform: translate(-50%);
+    border: 1px solid black;
+    border-radius: 4px;
+    padding: 10px 5px;
+    row-gap: 24px;
+  }
+
+  &__list {
+    width: 80%;
+  }
+}
+
+.taskform {
+  display: flex;
+
+  &__input {
+    border: none;
+    outline: none;
+    border-bottom: 1px solid blue;
+    font-size: xx-large;
+  }
+
+  &__create-btn {
+    background-color: blue;
+    color: white;
+    padding: 4px;
+    width: 62px;
+    text-align: center;
+  }
+}
+</style>

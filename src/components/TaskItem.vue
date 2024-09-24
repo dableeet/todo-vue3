@@ -22,7 +22,7 @@ onUpdated(() => {
 </script>
 
 <template>
-  <li class="list__task" ref="domNode">
+  <li class="task list__task" :class="{ task_done: isDone }" ref="domNode">
     <input
       @change="onCheck(id)"
       type="checkbox"
@@ -39,29 +39,91 @@ onUpdated(() => {
           onSave(id, taskModel);
         }
       "
+      class="task__form"
     >
-      <input type="text" v-model="taskModel" />
+      <input type="text" v-model="taskModel" class="task__input" />
       <input
         @click="onSave(id, taskModel)"
-        class="task__save-btn"
+        class="button task__save-btn"
         type="button"
         value="save"
       />
     </form>
-    <input
-      v-if="!isEdit"
-      @click="onEdit(id)"
-      class="task__edit-btn"
-      type="button"
-      value="edit"
-    />
-
-    <input
-      v-if="!isEdit"
-      @click="onDelete(id)"
-      class="task__delete-btn"
-      type="button"
-      value="delete"
-    />
+    <div class="task__btn-box">
+      <input
+        v-if="!isEdit"
+        @click="onEdit(id)"
+        class="button task__edit-btn"
+        type="button"
+        value="edit"
+      />
+      <input
+        v-if="!isEdit"
+        @click="onDelete(id)"
+        class="button task__delete-btn"
+        type="button"
+        value="delete"
+      />
+    </div>
   </li>
 </template>
+
+<style scoped lang="scss">
+.task {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  padding: 10px 0;
+
+  &_done {
+    background-color: rgba(0, 245, 0, 0.253);
+  }
+
+  &:not(:first-of-type) {
+    border-top: 1px solid blue;
+  }
+
+  &__input {
+    flex-grow: 1;
+    text-align: center;
+  }
+
+  &__form {
+    display: flex;
+    flex-grow: 1;
+    padding-left: 10px;
+  }
+
+  &__btn-box {
+    display: flex;
+    column-gap: 4px;
+  }
+
+  &__edit-btn,
+  &__delete-btn,
+  &__save-btn {
+    padding: 4px;
+    border-radius: 2px;
+    border-width: 0.5px;
+    border-style: solid;
+  }
+
+  &__edit-btn {
+    border-color: blue;
+    color: blue;
+  }
+
+  &__delete-btn {
+    border-color: red;
+    color: red;
+  }
+
+  &__save-btn {
+    border-color: green;
+    color: green;
+    width: 40px;
+    text-align: center;
+    margin-left: 14px;
+  }
+}
+</style>

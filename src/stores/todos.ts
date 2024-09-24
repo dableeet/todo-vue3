@@ -13,7 +13,7 @@ export const useTodosStore = defineStore('todoList', () => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(todos.value));
   });
 
-  const createId = codeGenerator(todos.value.length);
+  const createId = codeGenerator(todos.value.length + 1);
 
   const createTask = (task: string) => {
     const value = task.trim();
