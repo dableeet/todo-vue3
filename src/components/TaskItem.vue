@@ -49,16 +49,14 @@ onUpdated(() => {
         value="save"
       />
     </form>
-    <div class="task__btn-box">
+    <div v-if="!isEdit" class="task__btn-box">
       <input
-        v-if="!isEdit"
         @click="onEdit(id)"
         class="button task__edit-btn"
         type="button"
         value="edit"
       />
       <input
-        v-if="!isEdit"
         @click="onDelete(id)"
         class="button task__delete-btn"
         type="button"
