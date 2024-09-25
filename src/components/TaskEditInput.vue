@@ -3,7 +3,7 @@ import { onMounted, ref } from 'vue';
 
 defineProps<{
   className: string;
-  blurHandler: () => void;
+  blurHandler: (event: FocusEvent) => void;
 }>();
 
 const model = defineModel();
@@ -19,11 +19,6 @@ const escapeKeyHandler = (event: KeyboardEvent) => {
     event.target.blur();
   }
 };
-
-// const blurHandler = (event: Event) => {
-//   event.stopImmediatePropagation();
-//   onBlur();
-// };
 </script>
 
 <template>
