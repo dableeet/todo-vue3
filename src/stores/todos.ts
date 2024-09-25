@@ -29,18 +29,23 @@ export const useTodosStore = defineStore('todoList', () => {
   };
 
   const toggleIsEditById = (id: number) => {
-    todos.value.map((el) => {
+    todos.value.forEach((el) => {
       if (el.id === id) {
         el.isEdit = !el.isEdit;
-      }
-      if (el.id !== id && el.isEdit) {
+      } else if (el.isEdit) {
         el.isEdit = false;
       }
     });
   };
 
+  const disableAllEdit = () => {
+    todos.value.forEach((el) => {
+      el.isEdit = false;
+    });
+  };
+
   const updateTask = (id: number, updatedTask: string) => {
-    todos.value.map((el) => {
+    todos.value.forEach((el) => {
       if (id === el.id) {
         el.task = updatedTask;
         el.isEdit = false;
@@ -66,5 +71,6 @@ export const useTodosStore = defineStore('todoList', () => {
     deleteTask,
     createTask,
     toggleTaskStatus,
+    disableAllEdit,
   };
 });

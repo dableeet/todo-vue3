@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { onUpdated, ref } from 'vue';
+import TaskEditInput from './TaskEditInput.vue';
 
-const { task, id, isEdit } = defineProps<{
+const { task, id, isEdit, onSave, onEdit } = defineProps<{
   id: number;
   task: string;
   isDone: boolean;
@@ -13,12 +14,26 @@ const { task, id, isEdit } = defineProps<{
 }>();
 
 const taskModel = ref(task);
+const saveButton = ref<HTMLElement | null>(null);
 
 onUpdated(() => {
   if (isEdit) return;
 
   taskModel.value = task;
 });
+
+const formSubmitHandler = (event: Event) => {
+  event.preventDefault();
+  onSave(id, taskModel.value);
+};
+
+const blurHandler = (event: FocusEvent) => {
+  if (event.relatedTarget === saveButton.value) {
+    return;
+  }
+
+  onEdit(id);
+};
 </script>
 
 <template>
@@ -33,17 +48,17 @@ onUpdated(() => {
     <form
       v-else
       name="updateTaskForm"
-      @submit="
-        (event) => {
-          event.preventDefault();
-          onSave(id, taskModel);
-        }
-      "
+      @submit="formSubmitHandler"
       class="task__form"
     >
-      <input type="text" v-model="taskModel" class="task__input" />
+      <TaskEditInput
+        v-model="taskModel"
+        class-name="task__input"
+        :blur-handler="blurHandler"
+      />
       <input
         @click="onSave(id, taskModel)"
+        ref="saveButton"
         class="button task__save-btn"
         type="button"
         value="save"

@@ -10,6 +10,7 @@ const {
   deleteTask,
   createTask,
   toggleTaskStatus,
+  disableAllEdit,
 } = useTodosStore();
 
 const newTaskModel = ref('');
@@ -17,6 +18,12 @@ const newTaskModel = ref('');
 const dispatchCreateTask = () => {
   createTask(newTaskModel.value);
   newTaskModel.value = '';
+};
+
+const escapeKeyHandler = (event: KeyboardEvent) => {
+  if (event.key === 'Escape' && event.target instanceof HTMLElement) {
+    event.target.blur();
+  }
 };
 </script>
 
@@ -38,6 +45,8 @@ const dispatchCreateTask = () => {
           v-model="newTaskModel"
           class="taskform__input"
           placeholder="write your new task"
+          @keyup="escapeKeyHandler"
+          @focus="disableAllEdit"
         />
         <input
           @click="dispatchCreateTask()"
