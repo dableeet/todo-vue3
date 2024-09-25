@@ -37,7 +37,7 @@ const blurHandler = (event: FocusEvent) => {
 </script>
 
 <template>
-  <li class="task list__task" :class="{ task_done: isDone }" ref="domNode">
+  <li class="task list__task" :class="{ task_done: isDone }">
     <input
       @change="onCheck(id)"
       type="checkbox"
